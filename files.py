@@ -3,18 +3,27 @@ import pickle
 
 def load_data_from_csv_file():
     # import file
-    with open('DATA.csv', 'r') as files:
-        data_content = files.readlines()[1:]
-        for i in data_content:
-            row = i.split(',')
+    with open('DATA.csv', 'r') as files: #load and open file returns file object
+        # use the readline methods to read the file object and assign it file_contents
+        file_contents = files.readlines()[1:] # readlines returns the whole line
+        for row in file_contents: # loop through the  rows in the file contents 
+
+            print(row) #print each row from the file contents
+
+            # sample return
+            # 1,http://dummyimage.com/121x100.png/cc0000/ffffff,Iago,Itschakov,iitschakov0@soup.io,Marketing,14
+
+            row.split(',')
             new_contact = Employee(row[0], row[1], row[2],row[3], row[4], row[5], row[6])
             new_contact.save()
 
 def write_to_file(payload):
-    with open('DATA.csv', 'a') as files:
-        print("____________", payload)
-        files.write(payload)
-        files.write('\n')
+    with open('DATA.csv', 'a') as files: # note that mode is "a" for append to file
+        # sample csv input data
+        #payload  = "1,http://dummyimage.com/121x100.png/cc0000/ffffff,Iago,Itschakov,iitschakov0@soup.io,Marketing,14"
+        files.write(payload) # append the new data to the bottom of the csv file
+        files.write('\n') # add a new line after appending data
+
         Employee.fetch_data()
 
 # def delete_row_from_file(emp):
