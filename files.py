@@ -6,14 +6,14 @@ def load_data_from_csv_file():
     with open('DATA.csv', 'r') as files: #load and open file returns file object
         # use the readline methods to read the file object and assign it file_contents
         file_contents = files.readlines()[1:] # readlines returns the whole line
-        for row in file_contents: # loop through the  rows in the file contents 
+        for contents in file_contents: # loop through the  rows in the file contents 
 
-            print(row) #print each row from the file contents
+            # print(row) #print each row from the file contents
 
             # sample return
             # 1,http://dummyimage.com/121x100.png/cc0000/ffffff,Iago,Itschakov,iitschakov0@soup.io,Marketing,14
 
-            row.split(',')
+            row = contents.split(',')
             new_contact = Employee(row[0], row[1], row[2],row[3], row[4], row[5], row[6])
             new_contact.save()
 

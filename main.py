@@ -1,5 +1,7 @@
 from flask import Flask, jsonify, render_template
 from files import Employee, load_data_from_csv_file
+
+
 app = Flask(__name__)
 
 @app.route("/")
@@ -14,7 +16,7 @@ def load_data_file_contents():
 
 @app.route("/add")
 def create_new_employee():
-    new_emp = Employee('2','http://dummyimage.com/208x100.png/cc0000/ffffff','Francis','KIP','kiping@onehundre.com','Training','13')
+    new_emp = Employee('2','http://dummyimage.com/208x100.png/cc0000/ffffff','Francis','KIPu','kiping@onehundre.com','Training','13')
     new_emp.add_new(new_emp)
 
     return load_data_file_contents()
@@ -35,4 +37,5 @@ def delete_new_employee():
     # new_emp = Employee('2','http://dummyimage.com/208x100.png/cc0000/ffffff','Francis','KIP','kiping@onehundre.com','Training','13')
     # new_emp.add_new(new_emp)
 
-    return Employee.delete_employee('kiping@onehundre.com')
+    usr = Employee.delete_employee('iitschakov0@soup.io')
+    return f"employee {usr} has been deleted"
