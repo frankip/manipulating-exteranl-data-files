@@ -10,7 +10,10 @@
     {{ name }}
 
     {% for emp in all %}
-    {{emp.get_full_name()}}
+    <li>
+        {{emp.get_full_name()}}
+
+    </li>
     {% endfor %}
 </body>
 </html>

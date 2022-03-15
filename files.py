@@ -86,7 +86,7 @@ class Employee():
         # load()
 
         # print('len after', len(Contact.contact_list))
-        load_data_from_csv_file()
+        # load_data_from_csv_file()
         return Employee.employees_list
         # return [cont.get_full_name() for cont in Employee.employees_list]
 
