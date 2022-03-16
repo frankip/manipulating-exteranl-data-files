@@ -14,8 +14,7 @@ def set_up_tables(cursor):
         CREATE TABLE employees (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             image VARCHAR(250),
-            first_name VARCHAR(20), 
-            last_name VARCHAR(30),
+            name VARCHAR(20), 
             email VARCHAR(50)NOT NULL,
             department TEXT,
             leave_days INTEGER
@@ -35,8 +34,7 @@ def insert_data_into_sql(cursor):
         insert_query1= """INSERT INTO employees VALUES (
             "3",
             "http://dummyimage.com/184x100.png/cc0000/ffffff", 
-            "Rishabh",\
-            "Bansal", 
+            "Rishabh Bansal",
             "bansal@email.com",
             'Engineering', 
             22);
