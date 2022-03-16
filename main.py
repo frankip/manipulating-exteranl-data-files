@@ -11,12 +11,39 @@ def get_db_connection():
         conn.row_factory = sqlite3.Row
         return conn
 
-@app.route("/")
+@app.route("/", methods=('GET', 'POST'))
 def load_data_file_contents():
+    if request.method == 'POST':
+        image = request.form['image']
+        name = request.form['name']
+       
+        # first_name = request.form['name']
+        # last_name = request.form['name']
+        email = request.form['email']
+        # department = request.form['department'].value()
+        department = "sales"
+
+
+        if not name:
+            flash('First name is required!')
+
+        # if not last_name:
+        #     flash('last name is required!')
+
+        elif not email:
+            flash('email is required!')
+        else:
+            print("-----", department)
+            first_name, last_name = name.split()
+            conn = get_db_connection()
+            conn.execute('INSERT INTO MOCK_DATA(image, first_name, last_name, email, department) VALUES (?, ?, ?,?,?)',
+                         (image, first_name, last_name, email, department))
+            conn.commit()
+            conn.close()
+            return redirect(url_for('load_data_file_contents'))
+
     name = "Francis"
-    all = Employee.fetch_data()
-    # all = jsonify(user.to_json for user in all_emp)
-    # print(post)
+    all = Employee.fetch_data_from_sql()
 
     return render_template('index.html', name=name, all=all )
 

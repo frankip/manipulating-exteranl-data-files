@@ -3,9 +3,10 @@ import sqlite3
 with sqlite3.connect('data.db') as sql_conn:
     cursor  =  sql_conn.cursor()
 
-    tbl_query='''DROP TABLE IF EXISTS employees;
+    # create table 
+    tbl_query='''DROP TABLE IF EXISTS MOCK_DATA;
 
-        CREATE TABLE employees (
+        CREATE TABLE MOCK_DATA (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             image VARCHAR(250),
             first_name VARCHAR(20), 
@@ -17,7 +18,12 @@ with sqlite3.connect('data.db') as sql_conn:
             
         );
     '''
-
     cursor.executescript(tbl_query)
+
+# fetch data from the sql file and load to the DB
+with open('MOCK_DATA.sql') as fp:
+    print("Data loading")
+    sql_conn.executescript(fp.read())
+    print("data has been loaded")
 
 sql_conn.commit()

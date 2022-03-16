@@ -2,73 +2,20 @@ import json
 import pickle
 import sqlite3
 
-def set_up_database():
-    with sqlite3.connect('data.db') as sql_conn:    
-
-        return sql_conn
-
-def set_up_tables(cursor):
-    # create tables query
-    tbl_query='''DROP TABLE IF EXISTS employees;
-
-        CREATE TABLE employees (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            image VARCHAR(250),
-            name VARCHAR(20), 
-            email VARCHAR(50)NOT NULL,
-            department TEXT,
-            leave_days INTEGER
-        );
-    '''
-    cursor.executescript(tbl_query)
-
-
-#     try:
-#         print("i")
-#     except sqlite3.OperationalError:
-#         pass
-
-
-# add data to tables
-def insert_data_into_sql(cursor):
-        insert_query1= """INSERT INTO employees VALUES (
-            "3",
-            "http://dummyimage.com/184x100.png/cc0000/ffffff", 
-            "Rishabh Bansal",
-            "bansal@email.com",
-            'Engineering', 
-            22);
-    """ 
-        cursor.execute(insert_query1)
-
-
 def database_connection():
     with sqlite3.connect('data.db') as sql_conn:
-
-        curs = sql_conn.cursor()
-        set_up_tables(curs)
-        insert_data_into_sql(curs)
-
-        sql_conn.commit()
-        return curs
+        return sql_conn
 
 def fetch_data_from_sql():
-    # conn = set_up_database()
-    print("csr")
-    csr = database_connection()
+    connection = database_connection()
+    cursor = connection.cursor()
 
-    query = "select * from employees"
-    # query = "show tables;"
-    dat = csr.execute(query).fetchall()
+    # query ALL DATA FROM mockdata DB;"
+    query = "select * from MOCK_DATA"
+    dat = cursor.execute(query).fetchall()
 
-    print("dat", dat)
-
-    # dat = cursor.
-
-    for i in dat:
-        print("0",i)
+    # for i in dat:
     return dat
-
 
 def load_data_from_csv_file():
     # import file
@@ -154,19 +101,20 @@ class Employee():
                 cls.employees_list[contact].email = "jleallu@state.tx"
                 return cls.employees_list[contact].get_full_name()
 
-
     @staticmethod
-    def fetch_data():
+    def fetch_data_from_csv():
         '''
         method that returns the contact list
         '''
-        # print('len before', len(Employee.contact_list))
-        # load()
+        # return fetch_data_from_sql()
+        return [cont.get_full_name() for cont in Employee.employees_list]
 
-        # print('len after', len(Contact.contact_list))
-        # load_data_from_csv_file()
+    @staticmethod
+    def fetch_data_from_sql():
+        '''
+        method that returns the contact list
+        '''
         return fetch_data_from_sql()
-        # return [cont.get_full_name() for cont in Employee.employees_list]
 
     @classmethod
     def check_existing(cls,email):
@@ -220,6 +168,6 @@ if __name__=='__main__':
     new_emp = Employee('2','http://dummyimage.com/208x100.png/cc0000/ffffff','Rori','Kingerby','rkingerby1@feedburner.com','Training','13')
     # new_emp.add_new(new_emp)
     # print( Employee.update('rkingerby1@feedburner.com'))
-
-    print(Employee.delete_employee("rkingerby1@feedburner.com"))
+    # Employee.update_db()
+    # print(Employee.delete_employee("rkingerby1@feedburner.com"))
     print(Employee.fetch_data())
