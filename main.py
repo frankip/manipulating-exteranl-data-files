@@ -2,9 +2,12 @@ import sqlite3
 from flask import Flask, jsonify, render_template, request, url_for, flash, redirect
 from files import Employee, fetch_data_from_sql, load_data_from_csv_file
 
+from init_db import create_data_base_connection
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
+
+create_data_base_connection()
 
 def get_db_connection():
     with sqlite3.connect('data.db') as conn:
