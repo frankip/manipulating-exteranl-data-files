@@ -1,6 +1,9 @@
 import sqlite3
 
 def create_data_base_connection():
+    """creating a database connection 
+       then creating tables
+    """
     with sqlite3.connect('data.db') as sql_conn:
         cursor  =  sql_conn.cursor()
 

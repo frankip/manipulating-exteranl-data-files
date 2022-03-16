@@ -3,22 +3,24 @@ import pickle
 import sqlite3
 
 def database_connection():
+    """ A database connetion """
     with sqlite3.connect('data.db') as sql_conn:
         return sql_conn
 
+
 def fetch_data_from_sql():
+    """fetching all data from the sql db"""
     connection = database_connection()
     cursor = connection.cursor()
 
     # query ALL DATA FROM mockdata DB;"
     query = "select * from MOCK_DATA"
     dat = cursor.execute(query).fetchall()
-
-    # for i in dat:
     return dat
 
+
 def load_data_from_csv_file():
-    # import file
+    """ load data from a csv file"""
     with open('DATA.csv', 'r') as files: #load and open file returns file object
         # use the readline methods to read the file object and assign it file_contents
         file_contents = files.readlines()[1:] # readlines returns the whole line
@@ -33,7 +35,9 @@ def load_data_from_csv_file():
             new_contact = Employee(row[0], row[1], row[2],row[3], row[4], row[5], row[6])
             new_contact.save()
 
-def write_to_file(payload):
+
+def write_to_csv_file(payload):
+    """ writing data to the csv file """
     with open('DATA.csv', 'a') as files: # note that mode is "a" for append to file
         # sample csv input data
         #payload  = "1,http://dummyimage.com/121x100.png/cc0000/ffffff,Iago,Itschakov,iitschakov0@soup.io,Marketing,14"
@@ -41,6 +45,7 @@ def write_to_file(payload):
         files.write('\n') # add a new line after appending data
 
         Employee.fetch_data()
+
 
 # def delete_row_from_file(emp):
 #     with open('DATA.csv', 'ar') as files:
@@ -66,35 +71,26 @@ class Employee():
             return self.first_name
 
     def get_full_name(self):
+        """ return the full names """
         return f"{self.first_name}  {self.last_name}"
 
     def save(self):
         """
             the method saves the contact object into the contact list
         """
-        # print("saving", len(self.contact_list))
         self.employees_list.append(self)
 
     def add_new(self,employee):
         id = len(self.employees_list)+1
         employee.id = str(id)
-        # pylod = "Ivonne,Bridell,ibridell9@comcast.net"
-        # first_name = , last_name, email = contact
-        print("dict",employee.__dict__.values())
         pylod = ",".join(employee.__dict__.values())
-        # pylod = pickle.dumps(contact.__dict__.values())
-        print("load",pylod)
-        return write_to_file(pylod)
+        return write_to_csv_file(pylod)
     
     @classmethod   
     def update(cls, value):
         """
             the method saves the contact object into the contact list
         """
-        # print("saving", len(self.contact_list))
-        payl= {
-
-        }
         for contact in range(len(cls.employees_list)):
             if cls.employees_list[contact].email == value:
                 print("s")
@@ -106,7 +102,6 @@ class Employee():
         '''
         method that returns the contact list
         '''
-        # return fetch_data_from_sql()
         return [cont.get_full_name() for cont in Employee.employees_list]
 
     @staticmethod
@@ -127,7 +122,6 @@ class Employee():
         '''
         for contact in cls.contact_list:
             if contact.email == email:
-                print("s")
                 return contact.get_full_name()
 
         return False
