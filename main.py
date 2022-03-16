@@ -1,16 +1,26 @@
+import sqlite3
 from flask import Flask, jsonify, render_template
-from files import Employee, load_data_from_csv_file
+from files import Employee, fetch_data_from_sql, load_data_from_csv_file
 
 
 app = Flask(__name__)
 
+def get_db_connection():
+    with sqlite3.connect('data.db') as conn:
+        conn.row_factory = sqlite3.Row
+        return conn
+
 @app.route("/")
 def load_data_file_contents():
     name = "Francis"
-    load_data_from_csv_file()
+    # load_data_from_csv_file()
+    conn = get_db_connection()
+    # post  = fetch_data_from_sql()
+    # all  = fetch_data_from_sql()
+
     all = Employee.fetch_data()
     # all = jsonify(user.to_json for user in all_emp)
-    # print(all_emp)
+    # print(post)
 
     return render_template('index.html', name=name, all=all )
 

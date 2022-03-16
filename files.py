@@ -1,5 +1,76 @@
 import json
 import pickle
+import sqlite3
+
+def set_up_database():
+    with sqlite3.connect('data.db') as sql_conn:    
+
+        return sql_conn
+
+def set_up_tables(cursor):
+    # create tables query
+    tbl_query='''DROP TABLE IF EXISTS employees;
+
+        CREATE TABLE employees (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            image VARCHAR(250),
+            first_name VARCHAR(20), 
+            last_name VARCHAR(30),
+            email VARCHAR(50)NOT NULL,
+            department TEXT,
+            leave_days INTEGER
+        );
+    '''
+    cursor.executescript(tbl_query)
+
+
+#     try:
+#         print("i")
+#     except sqlite3.OperationalError:
+#         pass
+
+
+# add data to tables
+def insert_data_into_sql(cursor):
+        insert_query1= """INSERT INTO employees VALUES (
+            "3",
+            "http://dummyimage.com/184x100.png/cc0000/ffffff", 
+            "Rishabh",\
+            "Bansal", 
+            "bansal@email.com",
+            'Engineering', 
+            22);
+    """ 
+        cursor.execute(insert_query1)
+
+
+def database_connection():
+    with sqlite3.connect('data.db') as sql_conn:
+
+        curs = sql_conn.cursor()
+        set_up_tables(curs)
+        insert_data_into_sql(curs)
+
+        sql_conn.commit()
+        return curs
+
+def fetch_data_from_sql():
+    # conn = set_up_database()
+    print("csr")
+    csr = database_connection()
+
+    query = "select * from employees"
+    # query = "show tables;"
+    dat = csr.execute(query).fetchall()
+
+    print("dat", dat)
+
+    # dat = cursor.
+
+    for i in dat:
+        print("0",i)
+    return dat
+
 
 def load_data_from_csv_file():
     # import file
@@ -96,7 +167,7 @@ class Employee():
 
         # print('len after', len(Contact.contact_list))
         # load_data_from_csv_file()
-        return Employee.employees_list
+        return fetch_data_from_sql()
         # return [cont.get_full_name() for cont in Employee.employees_list]
 
     @classmethod

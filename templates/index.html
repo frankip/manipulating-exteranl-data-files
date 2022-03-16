@@ -15,20 +15,20 @@
 
           <h1>Hello, world!</h1>
           
-          {{ name }}
+          <!-- {{ name }} -->
           
           {% for emp in all %}
           <div class="card mb-3" style="max-width: 540px;">
             <div class="row g-0">
               <div class="col-md-4">
-                <img src="{{emp.image}}" class="img-fluid rounded-start" alt="...">
+                <img src="{{emp[1]}}" class="img-fluid rounded-start" alt="...">
               </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{{emp.get_full_name()}}</h5>
-                  <p class="card-text">{{emp.email}}</p>
-                  <p class="card-text">{{emp.department}}</p>
-                  <p class="card-text">you have {{emp.leave_name}} left </p>
+                  <h5 class="card-title">{{emp[2]}} {{emp[3]}}</h5>
+                  <p class="card-text">email - {{emp[4]}}</p>
+                  <p class="card-text">department - {{emp[5]}}</p>
+                  <p class="card-text">you have {{emp[6]}} leave days left </p>
                   <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
               </div>
